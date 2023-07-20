@@ -1,5 +1,5 @@
 #include "alpaca/client.h"
-
+#include <iostream>
 #include <utility>
 
 #include "glog/logging.h"
@@ -16,6 +16,7 @@ httplib::Headers headers(const Environment& environment) {
   return {
       {"APCA-API-KEY-ID", environment.getAPIKeyID()},
       {"APCA-API-SECRET-KEY", environment.getAPISecretKey()},
+      {"accept", "application/json"}
   };
 }
 
@@ -1052,7 +1053,7 @@ std::pair<Status, PortfolioHistory> Client::getPortfolioHistory(const std::strin
   return std::make_pair(portfolio_history.fromJSON(resp->body), portfolio_history);
 }
 
-std::pair<Status, Bars> Client::getBars(const std::vector<std::string>& symbols,
+std::pair<Status, Bars> Client::getStockBars(const std::vector<std::string>& symbols,
                                         const std::string& start,
                                         const std::string& end,
                                         const std::string& after,
@@ -1087,8 +1088,7 @@ std::pair<Status, Bars> Client::getBars(const std::vector<std::string>& symbols,
   }
   auto query_string = httplib::detail::params_to_query_str(params);
 
-  auto url = "/v1/bars/" + timeframe + "?" + query_string;
-
+  auto url = "/v2/stocks/bars?" + query_string;
   httplib::SSLClient client(environment_.getAPIDataURL());
   DLOG(INFO) << "Making request to: " << url;
   auto resp = client.Get(url.c_str(), headers(environment_));
@@ -1100,10 +1100,9 @@ std::pair<Status, Bars> Client::getBars(const std::vector<std::string>& symbols,
 
   if (resp->status != 200) {
     std::ostringstream ss;
-    ss << "Call to " << url << " returned an HTTP " << resp->status << ": " << resp->body;
+    ss << "Call to " << url.c_str() << " returned an HTTP " << resp->status << ": " << resp->body;
     return std::make_pair(Status(1, ss.str()), bars);
   }
-
   DLOG(INFO) << "Response from " << url << ": " << resp->body;
   return std::make_pair(bars.fromJSON(resp->body), bars);
 }

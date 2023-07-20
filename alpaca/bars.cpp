@@ -1,5 +1,5 @@
 #include "alpaca/bars.h"
-
+#include <iostream>
 #include "alpaca/json.h"
 #include "glog/logging.h"
 #include "rapidjson/document.h"
@@ -23,7 +23,6 @@ Status Bar::fromDocument(
   PARSE_DOUBLE(low_price, "l")
   PARSE_DOUBLE(close_price, "c")
   PARSE_UINT(volume, "v")
-
   return Status();
 }
 
@@ -36,18 +35,20 @@ Status Bars::fromJSON(const std::string& json) {
   if (!d.IsObject()) {
     return Status(1, "Deserialized valid JSON but it wasn't bars object");
   }
+  auto& bars_obj = d["bars"];  
 
-  for (auto symbol_bars = d.MemberBegin(); symbol_bars != d.MemberEnd(); symbol_bars++) {
-    bars[symbol_bars->name.GetString()] = std::vector<Bar>{};
-    for (auto& symbol_bar : symbol_bars->value.GetArray()) {
+  //For each symbol
+  for (auto symbol_itr = bars_obj.MemberBegin(); symbol_itr != bars_obj.MemberEnd(); ++symbol_itr) {
+    bars[symbol_itr->name.GetString()] = std::vector<Bar>{};
+    // For each timepoint
+    for (auto& symbol_bar : symbol_itr->value.GetArray()) {
       Bar bar;
       if (auto status = bar.fromDocument(symbol_bar.GetObject()); !status.ok()) {
         return status;
       }
-      bars[symbol_bars->name.GetString()].push_back(bar);
+      bars[symbol_itr->name.GetString()].push_back(bar);
     }
   }
-
   return Status();
 }
 } // namespace alpaca
