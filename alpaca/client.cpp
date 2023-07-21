@@ -1054,11 +1054,11 @@ std::pair<Status, PortfolioHistory> Client::getPortfolioHistory(const std::strin
 }
 
 std::pair<Status, Bars> Client::getStockBars(const std::vector<std::string>& symbols,
+                                        const std::string& timeframe,
                                         const std::string& start,
                                         const std::string& end,
                                         const std::string& after,
                                         const std::string& until,
-                                        const std::string& timeframe,
                                         const uint limit) const {
   Bars bars;
 
@@ -1104,6 +1104,55 @@ std::pair<Status, Bars> Client::getStockBars(const std::vector<std::string>& sym
     return std::make_pair(Status(1, ss.str()), bars);
   }
   DLOG(INFO) << "Response from " << url << ": " << resp->body;
+  return std::make_pair(bars.fromJSON(resp->body), bars);
+}
+
+std::pair<Status, Bars> Client::getCryptoBars(const std::vector<std::string>& symbols, 
+                                              const std::string& timeframe,
+                                              const std::string& start,
+                                              const std::string& end,
+                                              const uint limit) const{
+  Bars bars;
+
+  std::string symbols_string = "";
+
+  for (auto i = 0; i < symbols.size(); ++i) {
+    symbols_string += symbols[i];
+    symbols_string += ",";
+  }
+  symbols_string.pop_back();
+  std::cout << symbols_string << std::endl;
+
+  httplib::Params params{
+      {"symbols", symbols_string},
+      {"limit", std::to_string(limit)},
+      {"timeframe", timeframe},
+  };
+  if (start != "") {
+    params.insert({"start", start});
+  }
+  if (end != "") {
+    params.insert({"end", end});
+  }
+  auto query_string = httplib::detail::params_to_query_str(params);
+
+  auto url = "/v1beta3/crypto/us/bars?" + query_string;
+  httplib::SSLClient client(environment_.getAPIDataURL());
+  DLOG(INFO) << "Making request to: " << url;
+  auto resp = client.Get(url.c_str(), headers(environment_));
+  if (!resp) {
+    std::ostringstream ss;
+    ss << "Call to " << url << " returned an empty response";
+    return std::make_pair(Status(1, ss.str()), bars);
+  }
+
+  if (resp->status != 200) {
+    std::ostringstream ss;
+    ss << "Call to " << url.c_str() << " returned an HTTP " << resp->status << ": " << resp->body;
+    return std::make_pair(Status(1, ss.str()), bars);
+  }
+  DLOG(INFO) << "Response from " << url << ": " << resp->body;
+
   return std::make_pair(bars.fromJSON(resp->body), bars);
 }
 

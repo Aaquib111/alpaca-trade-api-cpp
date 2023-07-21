@@ -18,10 +18,9 @@ int main(int argc, char* argv[]){
     }
     auto client = alpaca::Client(env);
 
-    auto bars_response = client.getStockBars(
-        {"AAPL"},
-        "2020-04-01T09:30:00-04:00",
-        "2020-04-03T09:30:00-04:00"
+    auto bars_response = client.getCryptoBars(
+        {"BTC/USD"},
+        "1T"
     );
     if(auto status = bars_response.first; !status.ok()){
        cerr << "Error getting bars information: " << status.getMessage() << endl;

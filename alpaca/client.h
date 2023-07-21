@@ -655,12 +655,27 @@ class Client {
    * of an alpaca::Bars object.
    */
   std::pair<Status, Bars> getStockBars(const std::vector<std::string>& symbols,
-                                  const std::string& start,
-                                  const std::string& end,
+                                  const std::string& timeframe = "1D",
+                                  const std::string& start = "",
+                                  const std::string& end = "",
                                   const std::string& after = "",
                                   const std::string& until = "",
-                                  const std::string& timeframe = "1D",
                                   const uint limit = 100) const;
+
+
+  /**
+  *  @brief Fetch historical crypto data
+  *
+  *  @return std::pair with first element being a Status, and the second being a bars object
+  *
+  */
+  std::pair<Status, Bars> getCryptoBars(
+      const std::vector<std::string>& symbols,
+      const std::string& timeframe = "1D",
+      const std::string& start = "",
+      const std::string& end = "",
+      const uint limit = 100
+    ) const;
 
   /**
    * @brief Fetch last trade details for a symbol.
