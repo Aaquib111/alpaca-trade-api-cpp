@@ -1121,7 +1121,6 @@ std::pair<Status, Bars> Client::getCryptoBars(const std::vector<std::string>& sy
     symbols_string += ",";
   }
   symbols_string.pop_back();
-  std::cout << symbols_string << std::endl;
 
   httplib::Params params{
       {"symbols", symbols_string},
@@ -1204,4 +1203,39 @@ std::pair<Status, LastQuote> Client::getLastQuote(const std::string& symbol) con
   return std::make_pair(last_quote.fromJSON(resp->body), last_quote);
 }
 
+std::pair<Status, LastOrderBooks> Client::getCryptoLastOrderBook(const std::vector<std::string>& symbols) const{
+  // Get comma separated list of symbols
+  std::string symbols_list = "";
+  LastOrderBooks orderbooks;
+
+  for(auto i = 0; i < symbols.size(); ++i){
+    symbols_list += symbols[i];
+    symbols_list += ",";
+  }
+  symbols_list.pop_back();
+
+  // Create query string
+  httplib::Params params{
+    //{"loc", "us"},
+    {"symbols", symbols_list}
+  };
+
+  auto query_string = httplib::detail::params_to_query_str(params);
+  auto url = "/v1beta3/crypto/us/latest/orderbooks?" + query_string;
+  httplib::SSLClient client(environment_.getAPIDataURL());
+  DLOG(INFO) << "Making request to " << url;
+  auto resp = client.Get(url.c_str(), headers(environment_));
+  if(!resp){
+    std::ostringstream ss;
+    ss << "Call to " << url << "returned an empty response";
+    return std::make_pair(Status(1, ss.str()), orderbooks);
+  }
+  if(resp->status != 200){
+    std::ostringstream ss;
+    ss << "Call to " << url.c_str() << " returned an HTTP " << resp->status << ":" << resp->body;
+    return std::make_pair(Status(1, ss.str()), orderbooks);
+  }
+  DLOG(INFO) << "Response from " << url << ": " << resp->body;
+  return std::make_pair(orderbooks.fromJSON(resp->body), orderbooks);
+}
 } // namespace alpaca

@@ -46,6 +46,17 @@
     var = items;                                                                                                       \
   }
 
+#define PARSE_VECTOR_DOUBLES_IN_DICT(var, name, sub_name)                                                                                \
+  if (d.HasMember(name) && d[name].IsArray()) {                                                                        \
+    std::vector<double> items;                                                                                         \
+    for (auto& item : d[name].GetArray()) {                                                                            \
+      if (item[sub_name].IsNumber()) {                                                                                           \
+        items.push_back(item[sub_name].GetDouble());                                                                             \
+      }                                                                                                                \
+    }                                                                                                                  \
+    var = items;                                                                                                       \
+  }
+
 #define PARSE_VECTOR_FLOATS(var, name)                                                                                 \
   if (d.HasMember(name) && d[name].IsArray()) {                                                                        \
     std::vector<float> items;                                                                                          \

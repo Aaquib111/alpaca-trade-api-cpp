@@ -15,6 +15,7 @@
 #include "alpaca/portfolio.h"
 #include "alpaca/position.h"
 #include "alpaca/quote.h"
+#include "alpaca/orderbook.h"
 #include "alpaca/status.h"
 #include "alpaca/trade.h"
 #include "alpaca/watchlist.h"
@@ -716,6 +717,13 @@ class Client {
    * of an alpaca::LastQuote object.
    */
   std::pair<Status, LastQuote> getLastQuote(const std::string& symbol) const;
+
+  /**
+   * @brief Get the latest crypto orderbooks for a list of crypto symbols
+   * 
+   * @return a std::pair with the first being status, and the second bieng an alpaca::LastOrderBook object
+  */
+  std::pair<Status, LastOrderBooks> getCryptoLastOrderBook(const std::vector<std::string>& symbols) const;
 
  private:
   Environment environment_;

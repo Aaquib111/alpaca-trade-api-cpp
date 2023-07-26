@@ -18,7 +18,7 @@ int main(int argc, char* argv[]){
     }
     auto client = alpaca::Client(env);
 
-    auto bars_response = client.getCryptoBars(
+    /*auto bars_response = client.getCryptoBars(
         {"BTC/USD"},
         "1T"
     );
@@ -29,7 +29,14 @@ int main(int argc, char* argv[]){
     auto bars = bars_response.second.bars["AAPL"];
     for(auto& i : bars){
         cout << "Start price " << i.open_price << endl;
-    }
+    }*/
 
+    auto orderbook_response = client.getCryptoLastOrderBook(
+        {"BTC/USD"}
+    );
+    cout << "DONE" << orderbook_response.second.orderbooks["BTC/USD"].bid_prices[0] << endl;
+    for(auto& buy_price : orderbook_response.second.orderbooks["BTC/USD"].bid_prices){
+        cout << buy_price << endl;
+    }
     return 0;
 }
