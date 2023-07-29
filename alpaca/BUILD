@@ -51,6 +51,7 @@ cc_library(
         "@com_github_tencent_rapidjson//:rapidjson",
         "@com_github_yhirose_cpp_httplib//:httplib",
         "@com_github_unetworking_uwebsockets//:uwebsockets",
+        "@cpr"
     ],
 )
 

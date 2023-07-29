@@ -32,6 +32,13 @@ Status Environment::parse() {
     DLOG(WARNING) << api_data_url_env_var_ << " not set so defaulting to using the default data URL: " << kAPIDataURL;
     api_data_url_ = kAPIDataURL;
   }
+  
+  if (auto e = std::getenv(api_stream_url_env_var_.c_str())) {
+    api_stream_url_ = std::string(e);
+  } else {
+    DLOG(WARNING) << api_data_url_env_var_ << " not set so defaulting to using the default data URL: " << kAPIDataURL;
+    api_stream_url_ = kAPIStreamURL;
+  }
 
   parsed_ = true;
   return Status();
@@ -55,5 +62,9 @@ std::string Environment::getAPIBaseURL() const {
 
 std::string Environment::getAPIDataURL() const {
   return api_data_url_;
+}
+
+std::string Environment::getAPIStreamURL() const {
+  return api_stream_url_;
 }
 } // namespace alpaca

@@ -19,6 +19,7 @@
 #include "alpaca/status.h"
 #include "alpaca/trade.h"
 #include "alpaca/watchlist.h"
+#define CRYPTO_VERSION "v1beta3"
 
 namespace alpaca {
 
@@ -612,6 +613,11 @@ class Client {
    */
   std::pair<Status, Watchlist> removeSymbolFromWatchlist(const std::string& id, const std::string& symbol) const;
 
+  /**
+   * @brief Convert a list of stock symbols to a comma separated string
+  */
+
+  std::string getSymbolsFromVector(const std::vector<std::string>& symbols) const;
   /**
    * @brief Fetch portfolio history data.
    *

@@ -15,6 +15,9 @@ const std::string kAPIBaseURLPaper = "paper-api.alpaca.markets";
 /// The base URL for API calls to the data API
 const std::string kAPIDataURL = "data.alpaca.markets";
 
+/// The base URL for API calls to the streaming API
+const std::string kAPIStreamURL = "stream.data.alpaca.markets";
+
 /**
  * @brief A class to help witth parsing required variables from the environment.
  * @code{.cpp}
@@ -37,11 +40,13 @@ class Environment {
   explicit Environment(std::string api_key_id_env_var = "APCA_API_KEY_ID",
                        std::string api_secret_key_env_var = "APCA_API_SECRET_KEY",
                        std::string api_base_url_env_var = "APCA_API_BASE_URL",
-                       std::string api_data_url_env_var = "APCA_API_DATA_URL")
+                       std::string api_data_url_env_var = "APCA_API_DATA_URL",
+                       std::string api_stream_url_env_var = "APCA_API_STREAM_URL")
       : api_key_id_env_var_(api_key_id_env_var),
         api_secret_key_env_var_(api_secret_key_env_var),
         api_base_url_env_var_(api_base_url_env_var),
-        api_data_url_env_var_(api_data_url_env_var) {}
+        api_data_url_env_var_(api_data_url_env_var), 
+        api_stream_url_env_var_(api_stream_url_env_var) {}
 
   /**
    * @brief Parse the environment variables into local state.
@@ -88,6 +93,13 @@ class Environment {
    */
   std::string getAPIDataURL() const;
 
+  /**
+   * @brief A getter for the API Stream URL
+   *
+   * Note that this method should only be called after successfully calliing
+   * the parse() method.
+   */
+  std::string getAPIStreamURL() const;
  private:
   bool parsed_;
 
@@ -95,10 +107,12 @@ class Environment {
   std::string api_secret_key_;
   std::string api_base_url_;
   std::string api_data_url_;
+  std::string api_stream_url_;
 
   std::string api_key_id_env_var_;
   std::string api_secret_key_env_var_;
   std::string api_base_url_env_var_;
   std::string api_data_url_env_var_;
+  std::string api_stream_url_env_var_;
 };
 } // namespace alpaca
