@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "alpaca/alpaca.h"
+#include "alpaca/lib/alpaca.h"
 
 int main(int argc, char* argv[]) {
   // Parse configuration from the environment

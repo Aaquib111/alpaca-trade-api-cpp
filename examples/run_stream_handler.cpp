@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "alpaca/config.h"
-#include "alpaca/streaming.h"
+#include "alpaca/src/account/config.h"
+#include "alpaca/src/client/streaming.h"
 #include "rapidjson/document.h"
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/stringbuffer.h"

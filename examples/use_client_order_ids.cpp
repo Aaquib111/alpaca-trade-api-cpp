@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "alpaca/alpaca.h"
+#include "alpaca/lib/alpaca.h"a.h"
 
 int main(int argc, char* argv[]) {
   auto env = alpaca::Environment();

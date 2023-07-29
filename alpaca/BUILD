@@ -3,43 +3,43 @@ package(default_visibility = ["//visibility:private"])
 cc_library(
     name = "alpaca",
     hdrs = [
-        "account.h",
-        "asset.h",
-        "alpaca.h",
-        "bars.h",
-        "calendar.h",
-        "client.h",
-        "clock.h",
-        "config.h",
-        "documentation.h",
-        "json.h",
-        "order.h",
-        "portfolio.h",
-        "position.h",
-        "quote.h",
-        "orderbook.h",
-        "status.h",
-        "streaming.h",
-        "trade.h",
-        "watchlist.h",
+        "src/account/account.h",
+        "src/data_storage/asset.h",
+        "lib/alpaca.h",
+        "src/data_storage/bars.h",
+        "src/data_storage/calendar.h",
+        "src/client/client.h",
+        "src/data_storage/clock.h",
+        "src/account/config.h",
+        "lib/documentation.h",
+        "lib/json.h",
+        "src/data_storage/order.h",
+        "src/data_storage/portfolio.h",
+        "src/data_storage/position.h",
+        "src/data_storage/quote.h",
+        "src/data_storage/orderbook.h",
+        "src/data_storage/status.h",
+        "src/client/streaming.h",
+        "src/data_storage/trade.h",
+        "src/data_storage/watchlist.h",
     ],
     srcs = [
-        "account.cpp",
-        "asset.cpp",
-        "bars.cpp",
-        "calendar.cpp",
-        "client.cpp",
-        "clock.cpp",
-        "config.cpp",
-        "order.cpp",
-        "portfolio.cpp",
-        "position.cpp",
-        "quote.cpp",
-        "orderbook.cpp",
-        "status.cpp",
-        "streaming.cpp",
-        "trade.cpp",
-        "watchlist.cpp",
+        "src/account/account.cpp",
+        "src/data_storage/asset.cpp",
+        "src/data_storage/bars.cpp",
+        "src/data_storage/calendar.cpp",
+        "src/client/client.cpp",
+        "src/data_storage/clock.cpp",
+        "src/account/config.cpp",
+        "src/data_storage/order.cpp",
+        "src/data_storage/portfolio.cpp",
+        "src/data_storage/position.cpp",
+        "src/data_storage/quote.cpp",
+        "src/data_storage/orderbook.cpp",
+        "src/data_storage/status.cpp",
+        "src/client/streaming.cpp",
+        "src/data_storage/trade.cpp",
+        "src/data_storage/watchlist.cpp",
     ],
     visibility = ["//visibility:public"],
     defines = [
@@ -55,20 +55,6 @@ cc_library(
     ],
 )
 
-cc_library(
-    name = "test_helpers",
-    srcs = [
-        "testing.cpp",
-    ],
-    hdrs = [
-        "testing.h",
-    ],
-    deps = [
-        ":alpaca",
-        "@com_github_google_googletest//:gtest",
-    ],
-)
-
 cc_test(
     name = "account_test",
     size = "small",
@@ -77,7 +63,7 @@ cc_test(
     ],
     deps = [
         ":alpaca",
-        ":test_helpers",
+        "//test:test_helpers",
         "@com_github_google_googletest//:gtest_main",
     ],
 )
@@ -90,7 +76,7 @@ cc_test(
     ],
     deps = [
         ":alpaca",
-        ":test_helpers",
+        "//test:test_helpers",
         "@com_github_google_googletest//:gtest_main",
     ],
 )
@@ -103,7 +89,7 @@ cc_test(
     ],
     deps = [
         ":alpaca",
-        ":test_helpers",
+        "//test:test_helpers",
         "@com_github_google_googletest//:gtest_main",
     ],
 )
@@ -116,7 +102,7 @@ cc_test(
     ],
     deps = [
         ":alpaca",
-        ":test_helpers",
+        "//test:test_helpers",
         "@com_github_google_googletest//:gtest_main",
     ],
 )
@@ -129,7 +115,7 @@ cc_test(
     ],
     deps = [
         ":alpaca",
-        ":test_helpers",
+        "//test:test_helpers",
         "@com_github_google_googletest//:gtest_main",
     ],
 )
@@ -142,7 +128,7 @@ cc_test(
     ],
     deps = [
         ":alpaca",
-        ":test_helpers",
+        "//test:test_helpers",
         "@com_github_google_googletest//:gtest_main",
     ],
 )
@@ -155,7 +141,7 @@ cc_test(
     ],
     deps = [
         ":alpaca",
-        ":test_helpers",
+        "//test:test_helpers",
         "@com_github_google_googletest//:gtest_main",
     ],
 )
@@ -168,7 +154,7 @@ cc_test(
     ],
     deps = [
         ":alpaca",
-        ":test_helpers",
+        "//test:test_helpers",
         "@com_github_google_googletest//:gtest_main",
     ],
 )
@@ -181,7 +167,7 @@ cc_test(
     ],
     deps = [
         ":alpaca",
-        ":test_helpers",
+        "//test:test_helpers",
         "@com_github_google_googletest//:gtest_main",
     ],
 )
@@ -194,7 +180,7 @@ cc_test(
     ],
     deps = [
         ":alpaca",
-        ":test_helpers",
+        "//test:test_helpers",
         "@com_github_google_googletest//:gtest_main",
     ],
 )
@@ -207,7 +193,7 @@ cc_test(
     ],
     deps = [
         ":alpaca",
-        ":test_helpers",
+        "//test:test_helpers",
         "@com_github_google_googletest//:gtest_main",
     ],
 )
@@ -220,7 +206,7 @@ cc_test(
     ],
     deps = [
         ":alpaca",
-        ":test_helpers",
+        "//test:test_helpers",
         "@com_github_google_googletest//:gtest_main",
     ],
 )
@@ -233,7 +219,7 @@ cc_test(
     ],
     deps = [
         ":alpaca",
-        ":test_helpers",
+        "//test:test_helpers",
         "@com_github_google_googletest//:gtest_main",
     ],
 )
@@ -246,7 +232,7 @@ cc_test(
     ],
     deps = [
         ":alpaca",
-        ":test_helpers",
+        "//test:test_helpers",
         "@com_github_google_googletest//:gtest_main",
     ],
 )

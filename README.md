@@ -68,8 +68,8 @@ Consider the following minimal example usage of these classes:
 ```cpp
 #include <iostream>
 
-#include "alpaca/client.h"
-#include "alpaca/config.h"
+#include "alpaca/src/client/client.h"
+#include "alpaca/src/account/config.h"
 
 int main(int argc, char* argv[]) {
   // Parse the required environment variables using the supplied helper utility
@@ -496,7 +496,7 @@ For more information on the Account Activities API, see the official API documen
 
 To instantiate an instance of the stream handler, the main classes you'll need are:
 
-- [`alpaca::StreamHandler`](./alpaca/streaming.h): The main stream handler class.
+- [`alpaca::StreamHandler`](./alpaca/src/client/streaming.h): The main stream handler class.
 - [`alpaca::Environment`](./alpaca/config.h): A helper class for parsing the required environment variables from the local environment.
 
 Consider the following minimal example usage of these classes:
@@ -504,8 +504,8 @@ Consider the following minimal example usage of these classes:
 ```cpp
 #include <iostream>
 
-#include "alpaca/config.h"
-#include "alpaca/streaming.h"
+#include "alpaca/src/account/config.h"
+#include "alpaca/src/client/streaming.h"treaming.h"
 #include "rapidjson/document.h"
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/stringbuffer.h"
@@ -590,7 +590,7 @@ By sending a GET request to the `/v2/account` endpoint, you can see various info
 ```cpp
 #include <iostream>
 
-#include "alpaca/alpaca.h"
+#include "alpaca/lib/alpaca.h"
 
 int main(int argc, char* argv[]) {
   auto env = alpaca::Environment();
@@ -627,7 +627,7 @@ You can use the information from the account endpoint to do things like calculat
 ```cpp
 #include <iostream>
 
-#include "alpaca/alpaca.h"
+#include "alpaca/lib/alpaca.h"
 
 int main(int argc, char* argv[]) {
   auto env = alpaca::Environment();
@@ -662,7 +662,7 @@ If you send a GET request to the `/v2/assets` endpoint, you’ll receive a list 
 ```cpp
 #include <iostream>
 
-#include "alpaca/alpaca.h"
+#include "alpaca/lib/alpaca.h"
 
 int main(int argc, char* argv[]) {
   auto env = alpaca::Environment();
@@ -701,7 +701,7 @@ By sending a symbol along with our request, we can get the information about jus
 ```cpp
 #include <iostream>
 
-#include "alpaca/alpaca.h"
+#include "alpaca/lib/alpaca.h"
 
 int main(int argc, char* argv[]) {
   auto env = alpaca::Environment();
@@ -738,7 +738,7 @@ With GET requests to the `/v2/calendar` and `/v2/clock` endpoints, you can check
 ```cpp
 #include <iostream>
 
-#include "alpaca/alpaca.h"
+#include "alpaca/lib/alpaca.h"
 
 int main(int argc, char* argv[]) {
   auto env = alpaca::Environment();
@@ -791,7 +791,7 @@ Orders can be placed with a POST request to the `/v2/orders` endpoint.
 ```cpp
 #include <iostream>
 
-#include "alpaca/alpaca.h"
+#include "alpaca/lib/alpaca.h"
 
 int main(int argc, char* argv[]) {
   auto env = alpaca::Environment();
@@ -829,7 +829,7 @@ Client Order IDs can be used to organize and track specific orders in your clien
 ```cpp
 #include <iostream>
 
-#include "alpaca/alpaca.h"
+#include "alpaca/lib/alpaca.h"
 
 int main(int argc, char* argv[]) {
   auto env = alpaca::Environment();
@@ -875,7 +875,7 @@ If you’d like to see a list of your existing orders, you can send a get reques
 ```cpp
 #include <iostream>
 
-#include "alpaca/alpaca.h"
+#include "alpaca/lib/alpaca.h"
 
 int main(int argc, char* argv[]) {
   auto env = alpaca::Environment();
@@ -915,7 +915,7 @@ You can view the positions in your portfolio by making a GET request to the `/v2
 ```cpp
 #include <iostream>
 
-#include "alpaca/alpaca.h"
+#include "alpaca/lib/alpaca.h"
 
 int main(int argc, char* argv[]) {
   auto env = alpaca::Environment();
@@ -956,7 +956,7 @@ By using the data API, you can see what a stock price was at a particular time, 
 ```cpp
 #include <iostream>
 
-#include "alpaca/alpaca.h"
+#include "alpaca/lib/alpaca.h"
 
 int main(int argc, char* argv[]) {
   // Parse configuration from the environment

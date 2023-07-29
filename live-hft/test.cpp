@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "alpaca/client.h"
-#include "alpaca/config.h"
+#include "alpaca/src/client/client.h"
+#include "alpaca/src/account/config.h"
 
 using namespace std;
 
